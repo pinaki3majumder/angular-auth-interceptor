@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     console.log('login clicked');
 
     formVal.expiresInMins = 1;
-    
+
     this.auth.login(formVal).subscribe({
       next: (res: LOGIN_RESPONSE) => {
         console.log('LOGIN res-', res, this.form.valid);

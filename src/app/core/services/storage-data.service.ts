@@ -14,22 +14,22 @@ export class StorageDataService {
     return user;
   }
 
-  getAccessToken() {
-    return (this.getLocalStorageData() as LOGIN_RESPONSE).accessToken;
+  getAccessToken(): string {
+    return (this.getLocalStorageData() as LOGIN_RESPONSE)?.accessToken;
   }
 
-  getAccessTokenTime() {
+  getAccessTokenTime(): number {
     const tokenSplit = this.getAccessToken().split('.')[1];
     console.log(JSON.parse(atob(tokenSplit)).exp);
     const remainingTime = JSON.parse(atob(tokenSplit)).exp;
     return remainingTime;
   }
 
-  getRefreshToken() {
+  getRefreshToken(): string {
     return (this.getLocalStorageData() as LOGIN_RESPONSE).refreshToken;
   }
 
-  updateToken(data: any){
+  updateToken(data: any): void {
     localStorage.setItem('userData', JSON.stringify(data));
   }
 }

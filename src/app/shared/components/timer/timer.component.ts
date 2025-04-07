@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { LogoutService } from '../../../core/services/logout.service';
 import { ReLoginService } from '../../../core/services/re-login.service';
 import { TimerService } from './service/timer.service';
+import { AuthService } from '../../../features/auth/services/auth.service';
 
 @Component({
   selector: 'app-timer',
@@ -18,7 +18,7 @@ export class TimerComponent implements OnInit, OnDestroy {
   intervalId: any;
 
   constructor(
-    private logoutService: LogoutService,
+    private authService: AuthService,
     private reLoginService: ReLoginService,
     private timerService: TimerService
   ) { }
@@ -45,10 +45,10 @@ export class TimerComponent implements OnInit, OnDestroy {
       if (timeLeft <= 0) {
         clearInterval(this.intervalId);
 
-        if (confirm("ypu Have Been Idle! Stay?") == true) {
+        if (confirm("You Have Been Idle! Stay?") == true) {
           this.reLoginService.reLogin();
         } else {
-          this.logoutService.logout();
+          this.authService.logout();
         }
       } else {
         this.remainingTime = this.formatTime(timeLeft);

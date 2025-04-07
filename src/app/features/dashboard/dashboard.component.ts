@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TimerComponent } from "../../shared/components/timer/timer.component";
-import { LogoutService } from '../../core/services/logout.service';
 import { StorageDataService } from '../../core/services/storage-data.service';
 import { TimerService } from '../../shared/components/timer/service/timer.service';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,10 +14,10 @@ import { TimerService } from '../../shared/components/timer/service/timer.servic
 export class DashboardComponent implements OnInit {
 
   constructor(
-    private logoutService: LogoutService,
+    private authService: AuthService,
     private storageDataService: StorageDataService,
     private timerService: TimerService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const remainingTime = this.storageDataService.getAccessTokenTime();
@@ -25,6 +25,6 @@ export class DashboardComponent implements OnInit {
   }
 
   logout() {
-    this.logoutService.logout();
+    this.authService.logout();
   }
 }
