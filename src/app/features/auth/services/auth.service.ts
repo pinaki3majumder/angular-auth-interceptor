@@ -8,30 +8,24 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private isAuthenticated = false;
-
   constructor(
     private storageDataService: StorageDataService,
     private router: Router
-  ) {
-    this.isAuthenticated = this.storageDataService.getAccessToken() ? true : false;
-  }
+  ) { }
 
-  isLoggedIn(res: LOGIN_RESPONSE): boolean {
-    if (res) {
-      localStorage.setItem('userData', JSON.stringify(res));
-      return this.isAuthenticated = true;
+  setUserSession(loginResponse: LOGIN_RESPONSE): void {
+    if (loginResponse?.accessToken) {
+      localStorage.setItem('userData', JSON.stringify(loginResponse));
     } else {
-      return this.isAuthenticated = false;
+      this.logout();
     }
   }
 
-  isAuthenticatedUser(): boolean {    
-    return this.isAuthenticated = this.storageDataService.getAccessToken() ? true : false;
+  isAuthenticated(): boolean {
+    return !!this.storageDataService.getAccessToken();
   }
 
   logout(): void {
-    this.isAuthenticated = false;
     localStorage.removeItem('userData'); // Remove stored user data
     this.router.navigateByUrl('/login');
   }

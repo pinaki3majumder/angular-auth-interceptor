@@ -4,6 +4,7 @@ import { AuthRepositoryService } from '../../services/auth-repository.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LOGIN_FORM_VALUES, LOGIN_RESPONSE } from '../../models/login.type';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private auth: AuthRepositoryService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -30,17 +32,15 @@ export class LoginComponent implements OnInit {
 
   loginSubmit() {
     const formVal: LOGIN_FORM_VALUES = this.form.getRawValue();
-    console.log('login clicked');
-
     formVal.expiresInMins = 1;
 
     this.auth.login(formVal).subscribe({
       next: (res: LOGIN_RESPONSE) => {
         console.log('LOGIN res-', res, this.form.valid);
 
-        if (res) {
+        if (res && res.accessToken) {
           this.form.reset();
-          localStorage.setItem('userData', JSON.stringify(res));
+          this.authService.setUserSession(res);
           this.router.navigateByUrl('/dashboard');
         } else {
           console.log('LOGIN DATA NOT FOUND ERROR');
