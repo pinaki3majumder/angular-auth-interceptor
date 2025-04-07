@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { StorageDataService } from '../../../core/services/storage-data.service';
 import { LOGIN_RESPONSE } from '../models/login.type';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+  currentUserSig = signal<LOGIN_RESPONSE | null | undefined>(undefined);
 
   constructor(
     private storageDataService: StorageDataService,
@@ -15,7 +16,7 @@ export class AuthService {
 
   setUserSession(loginResponse: LOGIN_RESPONSE): void {
     if (loginResponse?.accessToken) {
-      localStorage.setItem('userData', JSON.stringify(loginResponse));
+      localStorage.setItem('token', loginResponse.accessToken);
     } else {
       this.logout();
     }
@@ -26,7 +27,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('userData'); // Remove stored user data
+    localStorage.removeItem('token'); // Remove stored user data
     this.router.navigateByUrl('/login');
   }
 }

@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
 
         if (res && res.accessToken) {
           this.form.reset();
+          this.authService.currentUserSig.set(res);
           this.authService.setUserSession(res);
           this.router.navigateByUrl('/dashboard');
         } else {
