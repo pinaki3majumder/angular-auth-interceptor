@@ -24,13 +24,7 @@ export class ReLoginService {
       JSON.stringify({
         refreshToken: this.authService.currentUserSig()?.refreshToken, // Optional, if not provided, the server will use the cookie
         expiresInMins: 2
-      }),
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'  // 👈 This forces a preflight request
-        })
-      }
+      })
     );
   }
 

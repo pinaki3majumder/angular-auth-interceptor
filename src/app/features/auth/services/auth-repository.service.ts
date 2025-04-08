@@ -13,24 +13,12 @@ export class AuthRepositoryService {
   constructor(private http: HttpClient) { }
 
   registerUser(data: REGISTER_FORM_VALUES): Observable<USER> {
-    return this.http.post<USER>('https://dummyjson.com/users/add', JSON.stringify(data),
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'  // 👈 This forces a preflight request
-        })
-      }
-    );
+    return this.http.post<USER>('https://dummyjson.com/users/add', JSON.stringify(data));
   }
 
   login(data: LOGIN_FORM_VALUES): Observable<LOGIN_RESPONSE> {
     return this.http.post<LOGIN_RESPONSE>('https://dummyjson.com/auth/login', JSON.stringify(data),
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'  // 👈 This forces a preflight request
-        })
-      }
+      // 
     );
   }
 }
