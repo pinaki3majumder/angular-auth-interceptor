@@ -53,4 +53,13 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  hasUnsavedChanges(): boolean {
+    return this.regForm.dirty || this.regForm.touched ?
+      window.confirm("You have unsaved changes. Do you really want to leave?") : true;
+  }
+
+  login(): void {
+    this.route.navigateByUrl('/login');
+  }
+
 }

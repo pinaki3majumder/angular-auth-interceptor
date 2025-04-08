@@ -5,5 +5,9 @@
     <br><br>
     <input type="text" name="password" id="password" placeholder="password" formControlName="password">
     <br><br>
-    <button type="submit">REGISTER</button>
+    <button type="submit" [disabled]="regForm.invalid">REGISTER</button>
 </form>
+
+<br><br>
+
+<button (click)="login()">GO TO LOGIN PAGE</button>

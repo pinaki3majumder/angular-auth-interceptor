@@ -5,6 +5,7 @@ import { AuthSelectionComponent } from './features/auth/components/auth-selectio
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { authGuard } from './core/guards/auth.guard';
 import { loginRedirectGuard } from './core/guards/login-redirect.guard';
+import { unsavedChangesGuard } from './core/guards/unsaved-changes.guard';
 
 export const routes: Routes = [
     {
@@ -15,7 +16,8 @@ export const routes: Routes = [
     {
         path: 'register',
         component: RegisterComponent,
-        canActivate: [loginRedirectGuard]
+        canActivate: [loginRedirectGuard],
+        canDeactivate: [unsavedChangesGuard]
     },
     {
         path: 'dashboard',
