@@ -31,6 +31,10 @@ export class LoginComponent implements OnInit {
   }
 
   loginSubmit() {
+    if (this.form.invalid) {
+      return;
+    }
+
     const formVal: LOGIN_FORM_VALUES = this.form.getRawValue();
     formVal.expiresInMins = 1;
 
@@ -38,14 +42,10 @@ export class LoginComponent implements OnInit {
       next: (res: LOGIN_RESPONSE) => {
         console.log('LOGIN res-', res, this.form.valid);
 
-        if (res && res.accessToken) {
-          this.form.reset();
-          this.authService.currentUserSig.set(res);
-          this.authService.setUserSession(res);
-          this.router.navigateByUrl('/dashboard');
-        } else {
-          console.log('LOGIN DATA NOT FOUND ERROR');
-        }
+        this.form.reset();
+        this.authService.currentUserSig.set(res);
+        this.authService.setUserSession(res);
+        this.router.navigateByUrl('/dashboard');
       },
       error: (err: HttpErrorResponse) => {
         console.log('LOGIN ERROR-', err);
