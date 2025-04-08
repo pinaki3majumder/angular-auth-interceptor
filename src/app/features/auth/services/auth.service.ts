@@ -16,7 +16,7 @@ export class AuthService {
 
   setUserSession(loginResponse: LOGIN_RESPONSE): void {
     if (loginResponse?.accessToken) {
-      localStorage.setItem('token', loginResponse.accessToken);
+      this.storageDataService.setToken(loginResponse.accessToken);
     } else {
       this.logout();
     }

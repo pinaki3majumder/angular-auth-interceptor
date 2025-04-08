@@ -19,12 +19,11 @@ export class StorageDataService {
 
     const token = this.getAccessToken() as string;
     const tokenData = token.split('.')[1];
-    console.log(JSON.parse(atob(tokenData)).exp);
     const remainingTime = JSON.parse(atob(tokenData)).exp;
     return remainingTime;
   }
 
-  updateToken(data: any): void {
-    localStorage.setItem('userData', JSON.stringify(data));
+  setToken(token: string): void {
+    localStorage.setItem('token', token);
   }
 }
